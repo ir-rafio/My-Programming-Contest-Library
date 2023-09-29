@@ -1,0 +1,7 @@
+pb Push Back
+ff First
+ss Second
+qmax Max Heap (Priority Queue)
+qmin Min Heap
+yesno Print Yes or No
+vin Vector Input
