@@ -28,7 +28,7 @@ int boundedTotient(int num, int cap)
 		temp=1;
 		for(j=0; j<k; j++) if(i&(1<<j)) temp*=v[j].first;
 
-		__builtinpopcount(i)&1? ans-=cap/temp: ans+=cap/temp;
+		__builtin_popcount(i)&1? ans-=cap/temp: ans+=cap/temp;
 	}
 
 	return ans;
