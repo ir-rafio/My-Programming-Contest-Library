@@ -1,0 +1,28 @@
+#!/bin/bash
+# Call as ./stress.sh ITERATIONS [--count]
+
+g++ gen.cpp -o gen # generator
+g++ main.cpp -o main  # main solution
+g++ brute.cpp -o brute # bruteforce
+
+for i in $(seq 1 "$1") ; do
+    [[ $* == *--count* ]] && echo "Attempt $i/$1"
+    ./gen > in.txt
+    ./brute < in.txt > out1.txt
+    ./main < in.txt > out2.txt
+
+    diff -y out1.txt out2.txt > diff.txt
+    if [ $? -ne 0 ] ; then
+        echo "Differing Testcase Found:"; cat in.txt
+        echo -e "\nOutputs:"; cat diff.txt
+        break
+    fi
+done
+
+rm in.txt
+rm out1.txt
+rm out2.txt
+rm diff.txt
+rm main
+rm brute
+rm gen
