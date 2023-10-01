@@ -1,0 +1,33 @@
+#!/bin/bash
+# Call as sh stress.sh ITERATIONS
+
+g++ main.cpp -o main  # main solution
+g++ brute.cpp -o brute # bruteforce
+g++ gen.cpp -o gen # generator
+g++ val.cpp -o val # validator
+
+for i in $(seq 1 "$1") ; do
+    echo "Attempt $i/$1"
+    ./gen > in.txt
+    ./brute < in.txt > out1.txt
+    ./main < in.txt > out2.txt
+    ./val < out1.txt > res1.txt
+    ./val < out2.txt > res2.txt
+
+    diff -y out1.txt out2.txt > diff1.txt
+    diff -y res1.txt res2.txt > diff2.txt
+    if [ $? -ne 0 ] ; then
+        echo -e "\nTestcase:"
+        cat in.txt
+        echo -e "\nOutputs:"
+        cat diff1.txt
+        echo -e "\nResults:"
+        cat diff2.txt
+        break
+    fi
+done
+
+files=("in.txt" "out1.txt" "out2.txt" "res1.txt" "res2.txt" "diff1.txt" "diff2.txt" "main" "brute" "gen" "val")
+for file in "${files[@]}"; do
+    rm "$file"
+done
