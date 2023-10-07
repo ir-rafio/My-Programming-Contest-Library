@@ -97,7 +97,10 @@ public:
     }
 
 public:
-    SegmentTree(SegmentTree& st): tree(st.tree), n(st.n), merge(st.merge), identity(st.identity)
+    SegmentTree(SegmentTree& st):
+        tree(st.tree), lazy(st.lazy), n(st.n),
+        merge(st.merge), identity(st.identity),
+        applyUpdate(st.applyUpdate), mergeUpdate(st.mergeUpdate), noUpdate(st.noUpdate)
     {}
 
     SegmentTree(
