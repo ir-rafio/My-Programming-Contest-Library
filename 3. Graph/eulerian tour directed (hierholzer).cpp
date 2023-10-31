@@ -1,23 +1,14 @@
 #include <bits/stdc++.h>
-using namespace std;
 
-using ll = long long;
-using llu = unsigned long long;
-
-#define CEIL(x, y) ((x) + (y) - 1) / (y); 
-#define print_case(tc) cout << "Case " << (tc) << ":\n"
-#define all(con) begin(con), end(con)
-#define sz(con) ((int)con.size())
-
+// code n drink Pennyroyal tea
 #ifdef Pennyroyal
-    #include <debug.h>
+#include <debug.h>
 #else
-    #define debug(...)
+#define debug(...)
+#define sdebug(...)
 #endif
 
-const int inf = 1e9 + 505;
-const ll infll = 1e18 + 505;
-const int MOD = 1000000007;
+using namespace std;
 
 const int nmax = 1e5 + 5;
 const int mmax = 2e5 + 5;
@@ -59,7 +50,7 @@ int findRoot() {
 }
 
 void DFS(int u) {
-    while(done[u] < sz(g[u])) {
+    while(done[u] < size(g[u])) {
         auto e = g[u][done[u]++];
         if(visited[e.second]) continue;
         visited[e.second] = 1;
@@ -67,6 +58,15 @@ void DFS(int u) {
     }
     path.emplace_back(u);
 }
+
+/*
+5 5
+1 2
+3 1
+3 4
+4 5
+5 3
+*/
 
 void solve(void) {
     cin >> n >> m;
@@ -88,11 +88,11 @@ void solve(void) {
     else {
         DFS(findRoot());
 
-        if(sz(path) != m + 1) {
+        if(size(path) != m + 1) {
             cout << "no Eulerian Path exists\n";
         }
         else {
-            reverse(all(path));
+            reverse(path.begin(), path.end());
             for(auto node : path) {
                 cout << node << ' ';
             }
@@ -101,25 +101,11 @@ void solve(void) {
     }
 }
 
-int main(void) {
+signed main(void) {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int testcase = 1;
-    // cin >> testcase;
-    for(int tc = 1; tc <= testcase; tc++) {
-        // print_case;
-        solve();
-    }
+    solve();
 
     return 0;
 }
-
-/*
-5 5
-1 2
-3 1
-3 4
-4 5
-5 3
-*/

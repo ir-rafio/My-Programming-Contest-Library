@@ -1,23 +1,14 @@
 #include <bits/stdc++.h>
-using namespace std;
 
-using ll = long long;
-using llu = unsigned long long;
-
-#define Ceil(x, y)      ((x) + (y) - 1) / (y); 
-#define Print_Case(tc)  cout << "Case " << (tc) << ":\n"
-#define All(con)        begin(con), end(con)
-#define Size(con)       ((int)con.size())
-
+// code n drink Pennyroyal tea
 #ifdef Pennyroyal
 #include <debug.h>
 #else
 #define debug(...)
+#define sdebug(...)
 #endif
 
-const int inf = 1e9 + 505;
-const ll infll = 1e18 + 505;
-const int MOD = 1000000007;
+using namespace std;
 
 struct DSU {
     vector<int> parent, size;
@@ -44,49 +35,42 @@ struct DSU {
     }
 };
 
-struct Edge {
-    int u, v, w;
-    bool operator <(Edge const& other) {
-        return w < other.w;
-    }
-};
-
 void solve() {
     int n, m;
     cin >> n >> m;
 
-    vector<Edge> edges(m);
-    for (int i = 0; i < m; i++) {
-        cin >> edges[i].u >> edges[i].v >> edges[i].w;
+    vector<tuple<int, int, int>> edges(m);
+    for (auto &[w, u, v] : edges) {
+        cin >> u >> v >> w;
     }
 
-    sort(All(edges));
+    sort(edges.begin(), edges.end());
 
     int cost = 0;
-    vector<Edge> mst;
+    vector<tuple<int, int, int>> mst;
     
     DSU d(n + 1);
     for(int i = 1; i <= n; i++) {
         d.make_set(i);
     }
 
-    for (Edge e : edges) {
-        if (d.find_set(e.u) != d.find_set(e.v)) {
-            cost += e.w;
-            mst.push_back(e);
-            d.union_sets(e.u, e.v);
+    for (auto [w, u, v] : edges) {
+        if (d.find_set(u) != d.find_set(v)) {
+            cost += w;
+            mst.push_back({w, u, v});
+            d.union_sets(u, v);
         }
     }
 
-    if (Size(mst) != n - 1) {
+    if (size(mst) != n - 1) {
         cout << "The graph isn't connected\n";
         return;
     }
 
     cout << "Minimum cost:\n" << cost << "\n\n";
     cout << "Minimum Spanning Tree (u, v, w):\n";
-    for (Edge e : mst) {
-        cout << e.u << ' ' << e.v << ' ' << e.w << '\n';
+    for (auto [w, u, v] : mst) {
+        cout << u << ' ' << v << ' ' << w << '\n';
     }
     cout << '\n';
 }
@@ -104,7 +88,7 @@ void solve() {
 3 2 3
 */
 
-int main(void) {
+signed main(void) {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 

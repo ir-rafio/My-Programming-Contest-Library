@@ -1,23 +1,14 @@
 #include <bits/stdc++.h>
-using namespace std;
 
-using ll = long long;
-using llu = unsigned long long;
-
-#define CEIL(x, y) ((x) + (y) - 1) / (y); 
-#define print_case(tc) cout << "Case " << (tc) << ":\n"
-#define all(con) begin(con), end(con)
-#define sz(con) ((int)con.size())
-
+// code n drink Pennyroyal tea
 #ifdef Pennyroyal
-    #include <debug.h>
+#include <debug.h>
 #else
-    #define debug(...)
+#define debug(...)
+#define sdebug(...)
 #endif
 
-const int inf = 1e9 + 505;
-const ll infll = 1e18 + 505;
-const int MOD = 1000000007;
+using namespace std;
 
 const int nmax = 205;
 const int mmax = 40005;
@@ -38,7 +29,7 @@ void clear() {
 }
 
 void DFS(int u) {
-    while(done[u] < sz(g[u])) {
+    while(done[u] < size(g[u])) {
         auto e = g[u][done[u]++];
         if(visited[e.second]) continue;
         visited[e.second] = 1;
@@ -74,9 +65,9 @@ bool canTour(int n) {
 
     DFS(root);
 
-    if(sz(path) != edges / 2 + 1) return false;
+    if(size(path) != edges / 2 + 1) return false;
     
-    reverse(all(path));
+    reverse(path.begin(), path.end());
     return true;
 }
 
@@ -104,10 +95,8 @@ void solve(void) {
     }
 
     if(canTour(n + 1)) {
-        debug(path);
-
         vector<int> in(n + 2), out(n + 2);
-        for(int i = 0; i + 1 < sz(path); i++) {
+        for(int i = 0; i + 1 < size(path); i++) {
             if(path[i] != n + 1 && path[i + 1] != n + 1) {
                 out[path[i]]++;
                 in[path[i + 1]]++;
@@ -120,7 +109,7 @@ void solve(void) {
         }
 
         cout << ans << '\n';
-        for(int i = 0; i + 1 < sz(path); i++) {
+        for(int i = 0; i + 1 < size(path); i++) {
             if(path[i] != n + 1 && path[i + 1] != n + 1) {
                 cout << path[i] << ' ' << path[i + 1] << '\n';
             }
@@ -128,16 +117,11 @@ void solve(void) {
     }
 }
 
-int main(void) {
+signed main(void) {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int testcase = 1;
-    // cin >> testcase;
-    for(int tc = 1; tc <= testcase; tc++) {
-        // print_case(tc);
-        solve();
-    }
+    solve();
 
     return 0;
 }

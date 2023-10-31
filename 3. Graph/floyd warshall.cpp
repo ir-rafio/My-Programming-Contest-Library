@@ -44,7 +44,7 @@ void negativeCycle() {
     }
 }
 
-void refresh(int n) {
+void clear(int n) {
     for(int u = 1; u <= n; u++) {
         for(int v = 1; v <= n; v++) {
             if(u == v) {
@@ -63,7 +63,7 @@ void solve() {
     int q;
     cin >> n >> m >> q;
     
-    refresh(n);    
+    clear(n);    
 
     for(int i = 0; i < m; i++) {
         int u, v;
