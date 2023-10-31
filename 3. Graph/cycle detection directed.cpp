@@ -1,23 +1,14 @@
 #include <bits/stdc++.h>
-using namespace std;
 
-using ll = long long;
-using llu = unsigned long long;
-
-#define CEIL(x, y) ((x) + (y) - 1) / (y); 
-#define PRINTCASE(tc) cout << "Case " << (tc) << ":\n"
-#define ALL(con) begin(con), end(con)
-#define SIZE(con) ((int)con.size())
-
+// code n drink Pennyroyal tea
 #ifdef Pennyroyal
 #include <debug.h>
 #else
 #define debug(...)
+#define sdebug(...)
 #endif
 
-const int inf = 1e9 + 505;
-const ll infll = 1e18 + 505;
-const int MOD = 1000000007;
+using namespace std;
 
 const int nmax = 1e5 + 5;
 vector<int> g[nmax];
@@ -27,7 +18,6 @@ vector<int> g[nmax];
 // -1: that vertice has no more edge
 int mark[nmax];
 
-// these are for printing the cycle
 int cycleStart = -1, cycleEnd = -1;
 int parent[nmax];
 
@@ -51,9 +41,6 @@ bool DFS(int u) {
 }
 
 // https://cses.fi/problemset/task/1678/
-// --------------------------------------------
-// Cycle detection and generating cycle for Directed Graph
-// backEdge ? printCycle() : print(-1)
 
 void solve(void) {
     int n, m;
@@ -82,7 +69,7 @@ void solve(void) {
         }
 
         cycle.emplace_back(cycleStart);
-        reverse(ALL(cycle));
+        reverse(cycle.begin(), cycle.end());
 
         for(auto it : cycle) cout << it << ' ';
     }
@@ -97,16 +84,11 @@ void solve(void) {
 3 4
 */
 
-int main(void) {
+signed main(void) {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int testcase = 1;
-    // cin >> testcase;
-    for (int tc = 1; tc <= testcase; tc++) {
-        // print_case(tc);
-        solve();
-    }
+    solve();
 
     return 0;
 }
