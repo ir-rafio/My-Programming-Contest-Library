@@ -20,6 +20,10 @@ for i in $(seq 1 "$1") ; do
         echo -e "\nTestcase:"
         cat in.txt
         echo -e "\nOutputs:"
+        cat out1.txt
+        echo -e "\n"
+        cat out2.txt
+        echo -e "\n"
         cat diff1.txt
         echo -e "\nResults:"
         cat diff2.txt
