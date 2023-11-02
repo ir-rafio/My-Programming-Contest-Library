@@ -1,3 +1,32 @@
+// Nasrum, please check if my implementation is good enough
+// I believe we don't need too complex stuff
+// - Rafio
+
+void floyd_warshall(int n)
+{
+    int i, j, k;
+
+    for(k=0; k<n; k++)
+        for(i=0; i<n; i++)
+        {
+            if(i==k) continue;
+
+            for(j=0; j<n; j++)
+            {
+                if(j==i) continue;
+                if(j==k) continue;
+
+                int temp1=mat[i][j], temp2;
+                if(mat[i][k]==-1 || mat[k][j]==-1) temp2=-1;
+                else temp2=mat[i][k]+mat[k][j];
+
+                if(temp2==-1) mat[i][j]=temp1;
+                else if(temp1==-1) mat[i][j]=temp2;
+                else mat[i][j]=min(temp1, temp2);
+            }
+        }
+}
+
 #include <bits/stdc++.h>
 
 // code n drink Pennyroyal tea
