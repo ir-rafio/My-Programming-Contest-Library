@@ -1,15 +1,3 @@
-#include <bits/stdc++.h>
-
-// code n drink Pennyroyal tea
-#ifdef Pennyroyal
-#include <debug.h>
-#else
-#define debug(...)
-#define sdebug(...)
-#endif
-
-using namespace std;
-
 const int K = 26;
 
 struct trie_vertex {
@@ -83,44 +71,3 @@ struct aho {
     	return res;
     }
 };
-
-/*
-4 4
-banana
-ban
-nana
-ana
-
-ban
-banana
-ananana
-ba
-
-
-1
-5
-5
-0
-*/
-
-void solve(void) {
-	int n, q; cin >> n >> q;
-	aho aa;
-	for (int i = 1; i <= n; i++) {
-		string s; cin >> s;
-		aa.insert(s);
-	}
-	while (q--) {
-		string s; cin >> s;
-		cout << aa.match(s) << '\n';
-	}
-}
-
-signed main(void) {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    solve();
-
-    return 0;
-}

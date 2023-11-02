@@ -1,11 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-/*
-tested in https://judge.yosupo.jp/submission/110003
-line 56: a character smaller than the alphabet must be added for suffix array of string, becomes 1-indexed.
-otherwise sorts cyclic shifts.
-
-*/
 namespace SA {
     const int B = 27, N = 1e6 + 5;
     char del = 'a' - 1;
@@ -45,17 +37,4 @@ namespace SA {
             } else k = 0;
         }
     }
-}
-
-int main() {
-    ios_base :: sync_with_stdio(0);
-    cin.tie(0);
-    string s;
-    cin >> s;
-    long long ans = s.size() * (s.size() + 1) / 2;
-    s += SA :: del;
-    SA :: suffix_array(s);
-    SA :: lcp_array(s);
-    for(int i = 1; i + 1 < s.size(); i++) ans -= SA :: lcp[i];
-    cout << ans << '\n';
 }

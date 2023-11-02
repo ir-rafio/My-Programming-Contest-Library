@@ -1,71 +1,18 @@
-#include <bits/stdc++.h>
+// anachor
+/*** Manacher's algorithm to generate longest palindromic substrings for all centers ***/
+/// When i is even, pal[i] = largest palindromic substring centered from str[i / 2]
+/// When i is odd, pal[i] = largest palindromic substring centered between str[i / 2] and str[i / 2] + 1
+vector<int> manacher(string str) { /// hash = 784265
+    int i, j, k, l = str.size(), n = l << 1;
+    vector<int> pal(n);
 
-/*
-@uthor: Nasrum Nur
----------------------------
-code n drink Pennyroyal tea
-*/
-
-#ifdef Pennyroyal
-#include <debug.h>
-#else
-#define debug(...)
-#define sdebug(...)
-#endif
-
-using namespace std;
-
-vector<int> manacher_odd(string s) {
-    int n = s.size();
-    s = "$" + s + "^";
-    vector<int> p(n + 2);
-    int l = 1, r = 1;
-    for (int i = 1; i <= n; i++) {
-        p[i] = max(0, min(r - i, p[l + (r - i)]));
-        while (s[i - p[i]] == s[i + p[i]]) p[i]++;
-        if (i + p[i] > r) {
-            l = i - p[i], r = i + p[i];
-        }
-        p[i]--;
-    }
-    return vector<int>(begin(p) + 1, end(p) - 1);
-}
-
-vector<int> manacher(string s) {
-    string t;
-    for(auto c : s) {
-        t += string("#") + c;
-    }
-    auto res = manacher_odd(t + "#");
-    return vector<int>(begin(res), end(res));
-}
-
-/*
-p[oddIndex] - 1 -> the length of the odd length palindrome
-p[evenIndex] - 1 -> the length of the even length palindrome
-*/
-
-void solve(void) {
-    string s = "babba";
-    auto p = manacher(s);
-    int index = 0;
-    int len = 1;
-    for (int i = 1; i < size(p); i++) {
-        if (p[i] > len) {
-            len = p[i];
-            index = i / 2 - len / 2;
+    for (i = 0, j = 0, k = 0; i < n; j = max(0, j - k), i += k){
+        while (j <= i && (i + j + 1) < n && str[(i - j) >> 1] == str[(i + j + 1) >> 1]) j++;
+        for (k = 1, pal[i] = j; k <= i && k <= pal[i] && (pal[i] - k) != pal[i - k]; k++){
+            pal[i + k] = min(pal[i - k], pal[i] - k);
         }
     }
-    for (int i = index; i < index + len; i++) {
-        cout << s[i];
-    }
-}
 
-signed main(void) {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    solve();
-
-    return 0;
+    pal.pop_back();
+    return pal;
 }
