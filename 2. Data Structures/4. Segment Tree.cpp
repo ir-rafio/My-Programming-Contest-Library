@@ -96,6 +96,29 @@ public:
         // val-leftsum works when merge function is sum
     }
 
+    // leftmost position of a minsegtree
+    // that has value <= val
+    int walk(int lo, int hi, int root, int from, node val)
+    {
+        if(lo>hi) return -1;
+
+        propagate(lo, hi, root);
+        if(from>hi) return -1;
+        if(tree[root]>val) return hi;
+
+        if(lo==hi)
+        {
+            return hi;
+        }
+
+        int mid=lo+hi>>1, leftChild=2*root+1, rightChild=2*root+2;
+        if(from>mid) return walk(mid+1, hi, rightChild, from, val);
+        node q1=query(max(from, lo), mid, lo, mid, leftChild);
+
+        if(q1<=val) return walk(lo, mid, leftChild, from, val);
+        return walk(mid+1, hi, rightChild, from, val);
+    }
+
 public:
     SegmentTree(SegmentTree& st):
         tree(st.tree), lazy(st.lazy), n(st.n),
