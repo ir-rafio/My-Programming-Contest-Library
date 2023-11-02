@@ -1,24 +1,7 @@
-#include <bits/stdc++.h>
-
-/*
-@uthor: Nasrum Nur
----------------------------
-code n drink Pennyroyal tea
-*/
-
-#ifdef Pennyroyal
-#include <debug.h>
-#else
-#define debug(...)
-#define sdebug(...)
-#endif
-
-using namespace std;
-
 const int nmax = 1e4 + 1;
 const int mod = 1000000007;
 int catalan[nmax + 1];
-
+// comb formula: ((2n)Cn)-((2n)C(n-1)) = (1/(n+1))*((2n)Cn)
 void genCatalan(int n) {
     catalan[0] = catalan[1] = 1;
     for (int i = 2; i <= n; i++) {
@@ -30,21 +13,4 @@ void genCatalan(int n) {
             }
         }
     }
-}
-
-void solve(void) {
-    for (int i = 0; i <= 10; i++)
-        cerr << catalan[i] << ' ';
-
-    cerr << '\n';
-}
-
-signed main(void) {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    genCatalan(nmax);
-    solve();
-
-    return 0;
 }

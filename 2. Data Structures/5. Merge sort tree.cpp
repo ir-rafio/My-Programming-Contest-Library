@@ -1,12 +1,3 @@
-#include <bits/stdc++.h>
-
-// tested: https://www.spoj.com/problems/MKTHNUM/
-/*
-build — O(n log^2 n)
-query — O(log^2 n)
-update — O(log^2 n)
-*/
-
 #include<ext/pb_ds/assoc_container.hpp>
 #include<ext/pb_ds/tree_policy.hpp>
 
@@ -73,48 +64,3 @@ public:
         tree[n].insert({nv, i});
 	}
 } mergeSortTree;
-
-void solve(void) {
-    int n, q; cin >> n >> q;
-    for (int i = 1; i <= n; i++) {
-    	cin >> arr[i];
-    }
-    int mn = *min_element(arr + 1, arr + n + 1);
-    int mx = *max_element(arr + 1, arr + n + 1);
-    mergeSortTree.reset(n);
-	mergeSortTree.build(1, 1, n);
-    while (q--) {
-    	int choice = 1;
-    	if (choice == 1) {
-	    	// query the k-th number in sorted a[l ... r] segment
-	    	int l, r, k; cin >> l >> r >> k;
-	    	int lo = mn, hi = mx, ans = lo;
-	    	while (lo <= hi) {
-	    		int mid = (lo + hi) / 2;
-	    		int index = mergeSortTree.query(1, 1, n, l, r, mid, n + 1);
-	    		if (index >= k) {
-	    			ans = mid;
-	    			hi = mid - 1;
-	    		}
-	    		else {
-	    			lo = mid + 1;
-	    		}
-	    	}
-	    	cout << ans << '\n';
-    	}
-    	else {
-    		int idx, x; cin >> idx >> x;
-    		mergeSortTree.update(1, 1, n, idx, arr[idx], x);
-    		arr[idx] = x;
-    	}
-    }
-}
-
-signed main(void) {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    solve();
-
-    return 0;
-}

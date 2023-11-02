@@ -1,34 +1,3 @@
-#include <bits/stdc++.h>
-
-// code n drink Pennyroyal tea
-#ifdef Pennyroyal
-#include <debug.h>
-#else
-#define debug(...)
-#define sdebug(...)
-#endif
-
-using namespace std;
-
-/*
-bridge: removing the ith edge increases the number of
-        componenet in the graph
-cutPoints: removing the ith vertex increases the number of
-        componenet in the graph
-
-tin[v] -> entry time for node v (lower the value is, the higher v is)
-low[v] -> using one edge how high we can reach from node v
-
-tin[u] < low[v] -> the descendants of node v can't go
-                    higher than node u, thus a bridge
-*/
-
-/*
-tested:
-https://cses.fi/problemset/task/2177
-https://vjudge.net/problem/UVA-315
-*/
-
 class Articulation {
 public:
     Articulation(int n) {
@@ -109,24 +78,3 @@ private:
         }
     }
 };
-
-void solve(void) {
-    int n, m; cin >> n >> m;
-    Articulation b(n);
-    for (int i = 1; i <= m; i++) {
-        int u, v; cin >> u >> v;
-        b.addEdge(u, v, i);
-        b.addEdge(v, u, i);
-    }
-    b.find_bridge();
-    b.find_cutPoints();
-}
-
-signed main(void) {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    solve();
-
-    return 0;
-}

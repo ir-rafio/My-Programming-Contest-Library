@@ -1,18 +1,3 @@
-#include <bits/stdc++.h>
-
-// code n drink Pennyroyal tea
-#ifdef Pennyroyal
-#include <debug.h>
-#else
-#define debug(...)
-#define sdebug(...)
-#endif
-
-using namespace std;
-
-const int nmax = 205;
-const int mmax = 40005;
-
 int n, m;
 vector<pair<int, int>> g[nmax];
 
@@ -69,59 +54,4 @@ bool canTour(int n) {
     
     reverse(path.begin(), path.end());
     return true;
-}
-
-void solve(void) {
-    cin >> n >> m;
-
-    clear();
-    vector<int> deg(n + 1);
-
-    for(int i = 1; i <= m; i++) {
-        int u, v;
-        cin >> u >> v;
-        g[u].push_back({v, i});
-        g[v].push_back({u, i});
-        deg[u]++, deg[v]++;        
-    }
-
-    int extra = m;
-    for(int i = 1; i <= n; i++) {
-        if(deg[i] & 1) {
-            ++extra;
-            g[n + 1].push_back({i, extra});
-            g[i].push_back({n + 1, extra});
-        }
-    }
-
-    if(canTour(n + 1)) {
-        vector<int> in(n + 2), out(n + 2);
-        for(int i = 0; i + 1 < size(path); i++) {
-            if(path[i] != n + 1 && path[i + 1] != n + 1) {
-                out[path[i]]++;
-                in[path[i + 1]]++;
-            }
-        }
-
-        int ans = 0;
-        for(int i = 1; i <= n; i++) {
-            ans += (in[i] == out[i]);
-        }
-
-        cout << ans << '\n';
-        for(int i = 0; i + 1 < size(path); i++) {
-            if(path[i] != n + 1 && path[i + 1] != n + 1) {
-                cout << path[i] << ' ' << path[i + 1] << '\n';
-            }
-        }
-    }
-}
-
-signed main(void) {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    solve();
-
-    return 0;
 }

@@ -1,15 +1,3 @@
-#include <bits/stdc++.h>
-
-// code n drink Pennyroyal tea
-#ifdef Pennyroyal
-#include <debug.h>
-#else
-#define debug(...)
-#define sdebug(...)
-#endif
-
-using namespace std;
-
 namespace tri {
     const int k = 26;
     struct trie_vertex {
@@ -48,37 +36,5 @@ namespace tri {
             }
             return level;
         }  
-        void dbg() {
-            for (int vertex = 0; vertex < size(trie); vertex++) {
-                auto i = trie[vertex];
-                debug(vertex, i.cPrefix, i.leaf);
-                sdebug(i.next, k);
-            }
-        }
     };
-}
-
-using namespace tri;
-
-void solve(void) {
-    int n, q; cin >> n >> q;
-    Trie t;
-    for (int i = 1; i <= n; i++) {
-        string word; cin >> word;
-        t.insert(word);
-    }
-    while (q--) {
-        string s; cin >> s;
-        bool isWord = false;
-        cout << t.search(s, isWord) << ' ' << isWord << '\n';
-    }
-}
-
-signed main(void) {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    solve();
-
-    return 0;
 }

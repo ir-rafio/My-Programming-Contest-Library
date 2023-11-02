@@ -1,18 +1,3 @@
-#include <bits/stdc++.h>
-
-// code n drink Pennyroyal tea
-#ifdef Pennyroyal
-#include <debug.h>
-#else
-#define debug(...)
-#define sdebug(...)
-#endif
-
-using namespace std;
-using ll = long long;
-
-const int nmax = 1e5 + 5;
-
 int n, m;
 
 vector<tuple<int, int, int>> adj[nmax];
@@ -34,38 +19,4 @@ void prim(int root) {
                 pq.push({-ew, v, ev});
         }
     }
-}
-
-void solve(void) {
-    cin >> n >> m;
-
-    for (int i = 0; i < m; i++) {
-        int u, v, w;
-        cin >> u >> v >> w;
-        adj[u].push_back({w, u, v});
-        adj[v].push_back({w, v, u});
-    }
-
-    prim(1);
-
-    if (size(mst) != n - 1) {
-        cout << "IMPOSSIBLE";
-        return;
-    }
-
-    ll cost = 0;
-    for (auto [w, u, v] : mst) {
-        cost += w;
-    }
-
-    cout << cost;
-}
-
-signed main(void) {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    solve();
-
-    return 0;
 }
