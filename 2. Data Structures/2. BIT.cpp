@@ -33,16 +33,14 @@ vector<int> BITbuild(vector<int>& ara) // ara is 0-indexed
     return BIT;
 }
 
-void BITreplace(vector<int>& BIT, int i, int p)
+void BITreplace(vector<int>& BIT, int i, int val) // i is 0-indexed
 {
-    int q=BITsum(BIT, i, i);
-    BITadd(BIT, i+1, p-q);
+    int s=BITsum(BIT, i, i);
+    BITadd(BIT, i+1, val-s);
 }
 
 int BITsum(vector<int>& BIT, int l, int r) // l and r are 0-indexed
 {
-    if(i>j) return 0;
-
     int p=BITsum(BIT, r+1);
     p-=BITsum(BIT, l);
 
