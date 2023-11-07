@@ -5,7 +5,8 @@ void BITadd(vector<int>& BIT, int i, int delta)
     while(i<=n)
     {
         BIT[i]+=delta;
-        i+=i&-i;
+        mask=i&-i;
+        i+=mask;
     }
 }
 
@@ -16,23 +17,14 @@ int BITsum(vector<int>& BIT, int i)
     while(i)
     {
         ans+=BIT[i];
-        i-=i&-i;
+        mask=i&-i;
+        i-=mask;
     }
 
     return ans;
 }
 
-int BITsum(vector<int>& BIT, int i, int j)
-{
-    if(i>j) return 0;
-
-    int p=BITsum(BIT, j+1);
-    p-=BITsum(BIT, i);
-
-    return p;
-}
-
-vector<int> BITbuild(vector<int>& ara)
+vector<int> BITbuild(vector<int>& ara) // ara is 0-indexed
 {
     int i, n=ara.size();
     vector<int> BIT(n+1, 0);
@@ -45,4 +37,14 @@ void BITreplace(vector<int>& BIT, int i, int p)
 {
     int q=BITsum(BIT, i, i);
     BITadd(BIT, i+1, p-q);
+}
+
+int BITsum(vector<int>& BIT, int l, int r) // l and r are 0-indexed
+{
+    if(i>j) return 0;
+
+    int p=BITsum(BIT, r+1);
+    p-=BITsum(BIT, l);
+
+    return p;
 }
