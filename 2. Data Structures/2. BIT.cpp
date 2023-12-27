@@ -5,7 +5,7 @@ void BITadd(vector<int>& BIT, int i, int delta)
     while(i<=n)
     {
         BIT[i]+=delta;
-        mask=i&-i;
+        int mask=i&-i;
         i+=mask;
     }
 }
@@ -17,7 +17,7 @@ int BITsum(vector<int>& BIT, int i)
     while(i)
     {
         ans+=BIT[i];
-        mask=i&-i;
+        int mask=i&-i;
         i-=mask;
     }
 
