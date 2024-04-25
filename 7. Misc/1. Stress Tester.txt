@@ -1,37 +1,33 @@
 #!/bin/bash
 # Call as sh stress.sh ITERATIONS
 
-g++ main.cpp -o main  # main solution
-g++ brute.cpp -o brute # bruteforce
-g++ gen.cpp -o gen # generator
-g++ val.cpp -o val # validator
+g++ candidate.cpp -o candidate  # candidate solution
+g++ bruteforce.cpp -o bruteforce # bruteforce solution
+g++ generator.cpp -o generator # test case generator
+
+> all.txt
 
 for i in $(seq 1 "$1") ; do
     echo "Attempt $i/$1"
-    ./gen > in.txt
-    ./brute < in.txt > out1.txt
-    ./main < in.txt > out2.txt
-    ./val < out1.txt > res1.txt
-    ./val < out2.txt > res2.txt
+    ./generator > in.txt
 
-    diff -y out1.txt out2.txt > diff1.txt
-    diff -y res1.txt res2.txt > diff2.txt
+    echo "Attempt $i/$1" >> all.txt 
+    cat < in.txt >> all.txt
+
+    ./bruteforce < in.txt > out1.txt
+    ./candidate < in.txt > out2.txt
+
+    diff -y out1.txt out2.txt > diff.txt
     if [ $? -ne 0 ] ; then
-        echo -e "\nTestcase:"
+        echo -e "\nTest case:"
         cat in.txt
         echo -e "\nOutputs:"
-        cat out1.txt
-        echo -e "\n"
-        cat out2.txt
-        echo -e "\n"
-        cat diff1.txt
-        echo -e "\nResults:"
-        cat diff2.txt
+        cat diff.txt
         break
     fi
 done
 
-files=("in.txt" "out1.txt" "out2.txt" "res1.txt" "res2.txt" "diff1.txt" "diff2.txt" "main" "brute" "gen" "val")
+files=("in.txt" "out1.txt" "out2.txt" "diff.txt" "candidate" "bruteforce" "generator")
 for file in "${files[@]}"; do
     rm "$file"
 done
