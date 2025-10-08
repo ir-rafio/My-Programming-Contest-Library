@@ -10,8 +10,8 @@ void buildLPS(string& pat, int nxt[])
 
         if(pat[l] == ch)
         {
-            nxt[i] = l;
             l++;
+            nxt[i] = l;
         }
         
         else if(l > 0)
@@ -39,8 +39,8 @@ void runKMP(string& txt, string& pat, int nxt[], int res[])
 
         if(l < m && pat[l] == ch)
         {
-            res[i] = l;
             l++;
+            res[i] = l;
         }
         
         else if(l > 0)
