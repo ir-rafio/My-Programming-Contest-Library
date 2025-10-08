@@ -1,25 +1,58 @@
-vector<int> prefix(string const& s) {
-    int n = size(s);
-    vector<int> pi(n);
-    for (int i = 1; i < n; i++) {
-        int j = pi[i - 1];
-        while (j > 0 and s[i] != s[j]) {
-            j = pi[j - 1];
+void buildLPS(string& pat, int nxt[])
+{
+    int i, m = pat.size();
+
+    int l = 0;
+    nxt[0] = 0;
+    for(i = 1; i < m; i++)
+    {
+        char ch = pat[i];
+
+        if(pat[l] == ch)
+        {
+            nxt[i] = l;
+            l++;
         }
-        if (s[i] == s[j]) j++;
-        pi[i] = j;
+        
+        else if(l > 0)
+        {
+            l = nxt[l - 1];
+            i--;
+        }
+
+        else
+        {
+            nxt[i] = 0;
+            l = 0;
+        }
     }
-    return pi;
 }
 
-vector<int> match(string const& p, string const& t) {
-    string s = p + "$" + t;
-    int m = size(t), n = size(p);
-    vector<int> pi = prefix(s), res;
-    for (int i = n + 1; i < n + m + 1; i++) {
-        if (pi[i] == n) {
-            res.emplace_back(i - 2 * n); // i - (n + 1) - n + 1
+void runKMP(string& txt, string& pat, int nxt[], int res[])
+{
+    int i, m = pat.size(), n = txt.size();
+
+    int l = 0;
+    for(i = 0; i < n; i++)
+    {
+        char ch = txt[i];
+
+        if(l < m && pat[l] == ch)
+        {
+            res[i] = l;
+            l++;
+        }
+        
+        else if(l > 0)
+        {
+            l = nxt[l - 1];
+            i--;
+        }
+
+        else
+        {
+            res[i] = 0;
+            l = 0;
         }
     }
-    return res;
 }
